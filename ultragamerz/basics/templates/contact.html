@@ -1,0 +1,93 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+{% comment %} <div class="contact-area pt-100 pb-100">
+    <div class="container">
+        <div class="custom-row-2">
+            <div class="col-lg-4 col-md-5">
+               
+            </div>
+            <div class="col-lg-8 col-md-7">
+                <div class="contact-form overflow-auto">
+                    <div class="contact-title mb-30">
+                        <h2>Get In Touch</h2>
+                    </div>
+                    <form class="contact-form-style" id="contact-form" action="{% url 'contact' %}" method="post">
+                        <div class="row">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button class="submit" type="submit">SEND</button>
+                        </div>
+                    </form>
+                    <p class="form-messege"></p>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div> {% endcomment %}
+<div class="contact-area pt-100 pb-100">
+    <div class="container">
+        <div class="custom-row-2">
+            <div class="col-lg-4 col-md-5">
+                <!-- Your contact info section here -->
+                <div class="contact-info-wrap">
+                    <div class="single-contact-info">
+                        <div class="contact-icon">
+                            <i class="fa fa-phone"></i>
+                        </div>
+                        <div class="contact-info-dec">
+                            <p>0743535331</p>
+                            <p>0758921932</p>
+                        </div>
+                    </div>
+                    <div class="single-contact-info">
+                        <div class="contact-icon">
+                            <i class="fa fa-globe"></i>
+                        </div>
+                        <div class="contact-info-dec">
+                            <p><a href="#">rocco@gmail.com</a></p>
+                        </div>
+                    </div>
+                    <div class="single-contact-info">
+                        <div class="contact-icon">
+                            <i class="fa fa-map-marker"></i>
+                        </div>
+                        <div class="contact-info-dec">
+                            <p>Address goes here, </p>
+                            <p>street, Crossroad 123.</p>
+                        </div>
+                    </div>
+                    <div class="contact-social text-center">
+                        <h3>Follow Us</h3>
+                        <ul>
+                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa fa-pinterest-p"></i></a></li>
+                            <li><a href="#"><i class="fa fa-tumblr"></i></a></li>
+                            <li><a href="#"><i class="fa fa-vimeo"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-7">
+                <div class="contact-form-container">
+                    <div class="contact-title mb-30">
+                        <h2>Get In Touch</h2>
+                    </div>
+                    <div class="contact-form verflow-auto" style="max-height: 500px;overflow-y: auto;">
+                        <form class="contact-form-style" id="contact-form" action="{% url 'contact' %}" method="post">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit"><span>SEND</span></button>
+                        </form>
+                        <p class="form-messege"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+```
