@@ -7,4 +7,6 @@ urlpatterns = [
     path('contact', views.Contact_Us, name='contact'),
     path("",views.home,name="home"),
     path('logout', views.Logout, name='logout'),
+    path('products', views.Products.as_view(), name='products'),
 ]
+

@@ -1,5 +1,6 @@
 {% load static %} 
-<header class="header-area header-padding-1 sticky-bar header-res-padding " style="opacity: 1; background: radial-gradient(circle, #FF6347, #FFD700, #00FF00);">
+<header class="header-area header-padding-1 sticky-bar header-res-padding " style=" background: radial-gradient(circle, #FF6347, #FFD700, #00FF00);padding: 0px;
+z-index: 50; ">
     <div class="container-fluid">
         <div class="row">
             
@@ -10,10 +11,10 @@
                             {% if not user.is_authenticated %}
                             <li><a href="{% url 'home' %}">Home <i class="fa "></i></a>
                             </li>
-                            <li><a href="{% url 'login' %}"> Login <i class="fa"></i> </a>
+                            <li><a href="{% url 'register' %}"> register <i class="fa"></i> </a>
                             </li>
                             {% endif %}
-                            <li><a href="#">Products</a></li>
+                            <li><a href="{% url 'products' %}">Products</a></li>
                             <li><a href="#"> Pages <i class="fa fa-angle-down"></i></a>
                                 <ul class="submenu">
                                     <li><a href="#"></a></li>
@@ -32,9 +33,10 @@
                     </nav>
                 </div>
             </div>
-            {% if user.is_authenticated %}
+            
             <div class="col-xl-2 col-lg-2 col-md-6 col-8">
                    <div class="header-right-wrap">
+            {% if user.is_authenticated %}
                     <div class="same-style header-search">
                         <a class="search-active" href="#"><i class="pe-7s-search"></i></a>
                         <div class="search-content container">
@@ -100,7 +102,11 @@
                         </div>
                     </div>
                     <div class="same-style header-wishlist">
-                        <a href="{% url 'logout' %}"><i class="pe-7s-diamond"></i></a>
+                        <a href="{% url 'logout' %}"><i class="pe-7s-delete-user"></i></a>
+                    </div>
+            {% else %}
+                    <div class="same-style header-wishlist">
+                        <a href="{% url 'login' %}"><i class="pe-7s-unlock"></i> Login</a>
                     </div>
                 </div>
             </div>
@@ -114,7 +120,7 @@
                         </li>
                         <li><a href="#">Products</a>
                         </li>
-                        <li><a href="#">Collection</a></li>
+                        <li><a href="{% url 'register' %}">Register</a></li>
                         <li><a href="#">Pages</a>
                             <ul>
                                 <li><a href="#">about us</a></li>
@@ -122,10 +128,9 @@
                                 <li><a href="#">checkout </a></li>
                                 <li><a href="#">wishlist </a></li>
                                 <li><a href="#">my account</a></li>
-                                <li><a href="#">contact us </a></li>
                             </ul>
                         </li>
-                        <li><a href="#">Blog</a>
+                        {% comment %} <li><a href="#">Blog</a>
                             <ul>
                                 <li><a href="#">blog standard</a></li>
                                 <li><a href="#">blog no sidebar</a></li>
@@ -134,9 +139,10 @@
                                 <li><a href="#">blog details 2</a></li>
                                 <li><a href="#">blog details 3</a></li>
                             </ul>
-                        </li>
+                        </li> {% endcomment %}
+                        <li><a href="#">Events</a></li>
                         <li><a href="#">About us</a></li>
-                        <li><a href="#">Contact</a></li>
+                        <li><a href="{% url 'contact' %}">contact us </a></li>
                     </ul>
                 </nav>
             </div>

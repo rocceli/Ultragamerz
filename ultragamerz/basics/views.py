@@ -1,7 +1,12 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import logout,authenticate,login
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from .forms import RegisterForm,UserLoginForm,messageForm
+from .serializers import productSerializer
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView
+from .models import product
 
 # Create your views here.
 
@@ -32,7 +37,6 @@ def Contact_Us(request):
             return redirect('home')
     return render(request,'contact.html',{'form':form})
 
-#     return render(request, 'authentication/login.html', {'form': form})
 def Login(request):
     if request.method == 'POST':
         form = UserLoginForm(request.POST)
@@ -42,7 +46,7 @@ def Login(request):
             user = authenticate(request, username=email, password=password)
             if user is not None:
                 login(request, user)  # Correct usage of login function
-                return redirect('home')  # Redirect to the home page
+                return redirect('Products')  # Redirect to the home page
             else:
                 form.add_error(None, "Invalid email or password.")
     else:
@@ -52,3 +56,13 @@ def Login(request):
 def Logout(request):
     logout(request)
     return redirect('home')
+class Products(ListView):
+    model = product
+    template_name = 'shop/goods.html'
+    context_object_name = 'products'
+    # ordering = ['-date']
+    # paginate_by = 6
+
+    def get_queryset(self):
+        queryset = product.objects.all()
+        return queryset
