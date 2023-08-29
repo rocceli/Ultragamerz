@@ -4,7 +4,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group,User
 from django.urls import reverse
 from django.views import View
-
+from django.core import serializers
+from django.db.models import Q
+import json
+from django.http import JsonResponse
 from ultragamerz.settings import EMAIL_HOST_USER
 from .forms import RegisterForm,UserLoginForm,messageForm
 from .serializers import productSerializer
@@ -117,3 +120,14 @@ class verification_View(View):
             pass
 
         return redirect('login')
+  
+class SearchResultsView(View):
+    def post(self,request):
+        query = json.loads(request.body)
+        results = product.objects.filter(Q(name__icontains=query['query']) |
+            Q(description__icontains=query['query']) |
+            Q(category__name__icontains=query['query']))
+        results = productSerializer(results,many=True).data
+        return JsonResponse({'data':results})
+        
+        

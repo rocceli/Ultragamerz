@@ -30,10 +30,14 @@
   </head>
 
   <body>
+    
     {% include 'partials/header.html' %}
     <div class="full-page-area " style="background-image: url('{% static 'img/test6.jpg' %}');background-repeat: norepeat;
 ">
         <div id="fullpage">
+          <div class="preloader">
+            <img src="{% static 'img/loading.gif' %}" alt="Loading...">
+        </div>
       {% block content %}{% endblock content %}
       </div>
     </div>
@@ -50,6 +54,81 @@
 <script src="{% static 'js/plugins.js'%}"></script>
 <!-- Main JS -->
 <script src="{% static 'js/main.js'%}"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var preloader = document.querySelector(".preloader");
+
+    // Set the time frame in milliseconds (e.g., 3000ms = 3 seconds)
+    var timeFrame = 500;
+
+    // Hide the preloader after the specified time frame
+    setTimeout(function() {
+        if (preloader) {
+            preloader.style.display = "none";
+        }
+    }, timeFrame);
+});
+const searchstring = document.querySelector('.search')
+const feedbackarea1 = document.querySelector('.row1')
+const feedbackarea2 = document.querySelector('.row2')
+searchstring.addEventListener('keyup', (e) => {
+  const searchString = e.target.value;
+  if (searchString.length > 0){
+    console.log(searchString);
+    fetch('search/', {
+      body: JSON.stringify({ query : searchString}),
+      method: 'POST'
+    })
+    .then((res) => res.json())
+    .then(data => {
+      console.log(data);
+      feedbackarea1.innerHTML = '';
+      feedbackarea2.innerHTML = '';
+      data.data.forEach(result => {
+        const productHtml = `
+            <div class="col-xl-4 col-lg-5 col-md-5 col-sm-6">
+                <div class="product-wrap">
+                    <div class="product-img">
+                        <a href="#">
+                            <img class="default-img" src="${result.image}" alt="">
+                            <img class="hover-img" src="${result.image}" alt="">
+                        </a>
+                        <span class="pink">-10%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-8 col-lg-7 col-md-7 col-sm-6">
+                <div class="shop-list-content">
+                    <h3><a href="#">${result.name}</a></h3>
+                    <div class="product-list-price">
+                        <span>Ksh ${result.price}</span>
+                        <span class="old">$ 90.00</span>
+                    </div>
+                    <div class="rating-review">
+                        <div class="product-list-rating">
+                            <i class="fa fa-star-o yellow"></i>
+                            <i class="fa fa-star-o yellow"></i>
+                            <i class="fa fa-star-o yellow"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                        </div>
+                        <a href="#">3 Reviews</a>
+                    </div>
+                    <p>${result.description}</p>
+                    <div class="shop-list-btn btn-hover">
+                        <a href="#">ADD TO CART</a>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        feedbackarea1.insertAdjacentHTML('beforeend', productHtml);
+          });
+      
+    }
+    )}
+});
+</script>
 
   </body>
 </html>
