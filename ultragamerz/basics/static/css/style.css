@@ -8576,7 +8576,7 @@ a.default-btn {
         -moz-appearance: none;
         -webkit-appearance: none;
         min-width: 143px;
-        background: rgba(0, 0, 0, 0) url("../../assets/img/icon-img/select.png") no-repeat scroll right 0px center; }
+        background: rgba(0, 0, 0, 0) url("{% static 'img/icon-img/select.png'% }") no-repeat scroll right 0px center; }
     .shop-top-bar .select-shoing-wrap p {
       color: #606060;
       margin: 0; }
@@ -9632,7 +9632,7 @@ h3.cart-page-title {
   font-size: 14px;
   height: 45px;
   padding: 2px 20px;
-  background: rgba(0, 0, 0, 0) url("../../assets/img/icon-img/select.png") no-repeat scroll right 18px center;
+  background: rgba(0, 0, 0, 0) url("{% static 'img/icon-img/select.png'% }") no-repeat scroll right 18px center;
   cursor: pointer; }
 
 .billing-info-wrap .checkout-account {

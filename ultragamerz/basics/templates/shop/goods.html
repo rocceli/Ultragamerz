@@ -35,8 +35,8 @@
                                     <div class="product-wrap mb-25 scroll-zoom">
                                         <div class="product-img">
                                             <a href="#">
-                                                <img class="default-img" src="{{ product.image }}" alt="">
-                                                <img class="hover-img" src="{{ product.image }}" alt="">
+                                                <img class="default-img" src="{{ product.image.url  }}" alt="">
+                                                <img class="hover-img" src="{{ product.image.url  }}" alt="">
                                             </a>
                                             <span class="pink">-10%</span>
                                             <div class="product-action">
@@ -73,12 +73,13 @@
                         <div id="shop-2" class="tab-pane">
                             <div class="shop-list-wrap mb-30">
                                 <div class="row">
+                                    {% for product in products %}
                                     <div class="col-xl-4 col-lg-5 col-md-5 col-sm-6">
                                         <div class="product-wrap">
                                             <div class="product-img">
                                                 <a href="#">
-                                                    <img class="default-img" src="{% static 'img/product/pro-1.jpg' %}" alt="">
-                                                    <img class="hover-img" src="{% static 'img/product/pro-1-1.jpg' %}" alt="">
+                                                    <img class="default-img" src="{{ product.image.url }}" alt="">
+                                                    <img class="hover-img" src="{{ product.image.url }}" alt="">
                                                 </a>
                                                 <span class="pink">-10%</span>
                                             </div>
@@ -86,9 +87,9 @@
                                     </div>
                                     <div class="col-xl-8 col-lg-7 col-md-7 col-sm-6">
                                         <div class="shop-list-content">
-                                            <h3><a href="#">Products Name Here</a></h3>
+                                            <h3><a href="#">{{ product.name }}</a></h3>
                                             <div class="product-list-price">
-                                                <span>$ 60.00</span>
+                                                <span>Ksh {{ product.price }}</span>
                                                 <span class="old">$ 90.00</span>
                                             </div>
                                             <div class="rating-review">
@@ -107,6 +108,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>
@@ -140,7 +142,7 @@
                             <ul>
                                 <li>
                                     <div class="sidebar-widget-list-left">
-                                        <input type="checkbox"> <a href="#">On Sale <span>4</span> </a> 
+                                        <input type="checkbox"> <a href="#">On Sale <span>{{ products|length }}</span> </a> 
                                         <span class="checkmark"></span>
                                     </div>
                                 </li>
@@ -173,11 +175,19 @@
                         <h4 class="pro-sidebar-title">Tag </h4>
                         <div class="sidebar-widget-tag mt-25">
                             <ul>
-                                <li><a href="#">Clothing</a></li>
-                                <li><a href="#">Accessories</a></li>
-                                <li><a href="#">For Men</a></li>
-                                <li><a href="#">Women</a></li>
-                                <li><a href="#">Fashion</a></li>
+                                {% if products %}
+                                {% with first_category=products.0.category %}
+                                    <li><a href="#">{{ first_category }}</a></li>
+                                    {% for product in products %}
+                                        {% if product.category != first_category %}
+                                            <li><a href="#">{{ product.category }}</a></li>
+                                            {% with first_category=product.category %}
+                                            {% endwith %}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endwith %}
+                            {% endif %}
+
                             </ul>
                         </div>
                     </div>

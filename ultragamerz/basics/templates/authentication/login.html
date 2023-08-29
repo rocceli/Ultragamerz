@@ -23,9 +23,9 @@
                             <h4> login </h4>
                         </a>
                         <a data-toggle="tab" href="{% url 'register' %}">
-                            {% if request.GET.message %}
-                            <h4>{{ request.GET.message }}</h4>
-                            {% endif %}
+                           
+                            <h4>{{ message }}</h4>
+                           
 
                         </a>
                     </div>
