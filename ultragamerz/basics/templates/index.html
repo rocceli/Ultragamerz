@@ -11,7 +11,7 @@
     <link
       rel="shortcut icon"
       type="image/x-icon"
-      href="{% static  'img/favicon.png'%}"
+      href="{% static  'img/logo.jpeg'%}"
     />
 
     <!-- CSS
@@ -103,7 +103,7 @@
                               <a title="Wishlist" href="#"><i class="pe-7s-like"></i></a>
                           </div>
                           <div class="pro-same-action pro-cart">
-                              <a title="Add To Cart" href="#"><i class="pe-7s-cart"></i> Add to cart</a>
+                              <a title="Add To Cart" href="#"><i class="pe-7s-cart"></i> order now</a>
                           </div>
                           <div class="pro-same-action pro-quickview">
                               <a title="Quick View" href="#" data-toggle="modal" data-target="#exampleModal"><i class="pe-7s-look"></i></a>
@@ -127,7 +127,7 @@
                 </div>
             </div> `;
             const productHtml2 = `
-            <div class="col-xl-4 col-lg-5 col-md-5 col-sm-6">
+            <div class="col-xl-4 col-lg-5 col-md-5 col-sm-6 padding">
               <div class="product-wrap">
                   <div class="product-img">
                       <a href="#">
@@ -143,7 +143,6 @@
                   <h3><a href="#">${ result.name }</a></h3>
                   <div class="product-list-price">
                       <span>Ksh ${ result.price }</span>
-                      <span class="old">$ 90.00</span>
                   </div>
                   <div class="rating-review">
                       <div class="product-list-rating">
@@ -155,9 +154,8 @@
                       </div>
                       <a href="#">3 Reviews</a>
                   </div>
-                  <p>${ result.description } </p>
                   <div class="shop-list-btn btn-hover">
-                      <a href="#">ADD TO CART</a>
+                      <a href="#">order now</a>
                   </div>
               </div>
           </div>`;

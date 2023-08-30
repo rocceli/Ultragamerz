@@ -45,7 +45,6 @@ def Register(request):
                     [mail],
                     fail_silently=False,
                 )
-                print('Email sent successfully')
             except BadHeaderError:
                 return HttpResponse('Invalid header found.')
             except Exception as Ex:
@@ -129,5 +128,9 @@ class SearchResultsView(View):
             Q(category__name__icontains=query['query']))
         results = productSerializer(results,many=True).data
         return JsonResponse({'data':results})
-        
-        
+    
+class ProductDetailView(LoginRequiredMixin,View):
+    def get(self,request,pk):
+        product_obj = product.objects.get(pk=pk)
+        return render(request,'shop/product.html',{'product':product_obj})
+    

@@ -12,5 +12,5 @@ urlpatterns = [
     path('products', views.Products.as_view(), name='products'),
     path('activate/<uidb64>/<token>',verification_View.as_view(),name='activate'),
     path('search/', csrf_exempt(SearchResultsView.as_view()), name='search'),
+    path('product/<int:pk>', views.ProductDetailView.as_view(), name='product-detail'),
 ]
-
