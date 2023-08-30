@@ -4,17 +4,16 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group,User
 from django.urls import reverse
 from django.views import View
-from django.core import serializers
 from django.db.models import Q
 import json
 from django.http import JsonResponse
-from ultragamerz.settings import EMAIL_HOST_USER
+from django.conf import settings
 from .forms import RegisterForm,UserLoginForm,messageForm
 from .serializers import productSerializer
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView
 from .models import product
-from django.core.mail import EmailMessage, BadHeaderError
+from django.core.mail import EmailMessage, BadHeaderError,send_mail
 from django.http import HttpResponse
 from django.utils.encoding import force_bytes,force_text,DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
@@ -37,15 +36,15 @@ def Register(request):
             email_subject = 'Ultragamerz Account Activation'
             activate_url = 'http://'+ domain + link
             email_body = "Please click the link to activate your account" + activate_url
-            
+            email_header = 'Ultragamerz Account Activation'
             try:
-                email = EmailMessage(
+                send_mail(
                     email_subject,
                     email_body,
-                    EMAIL_HOST_USER,
+                    settings.DEFAULT_FROM_EMAIL,
                     [mail],
+                    fail_silently=False,
                 )
-                email.send()
                 print('Email sent successfully')
             except BadHeaderError:
                 return HttpResponse('Invalid header found.')
@@ -90,6 +89,7 @@ def Login(request):
         form = UserLoginForm()
     return render(request, 'authentication/login.html', {'form': form})
 
+@login_required(login_url='login')
 def Logout(request):
     logout(request)
     return redirect('home')

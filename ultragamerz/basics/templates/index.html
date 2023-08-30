@@ -30,105 +30,143 @@
   </head>
 
   <body>
-    
     {% include 'partials/header.html' %}
-    <div class="full-page-area " style="background-image: url('{% static 'img/test6.jpg' %}');background-repeat: norepeat;
-">
-        <div id="fullpage">
-          <div class="preloader">
-            <img src="{% static 'img/loading.gif' %}" alt="Loading...">
+    <div
+      class="full-page-area"
+      style="
+        background-image: url('{% static 'img/test3.jpg' %}');
+        background-repeat: norepeat;
+      "
+    >
+      <div id="fullpage">
+        <div class="preloader">
+          <img src="{% static 'img/loading.gif' %}" alt="Loading..." />
         </div>
-      {% block content %}{% endblock content %}
+        {% block content %}{% endblock content %}
       </div>
     </div>
     <!-- All JS is here
 ============================================ -->
 
-<!-- jQuery JS -->
-<script src="{% static 'js/vendor/jquery-1.12.4.min.js'%}"></script>
-<!-- Popper JS -->
-<script src="{% static 'js/popper.min.js'%}"></script>
-<!-- Bootstrap JS -->
-<script src="{% static 'js/bootstrap.min.js'%}"></script>
-<!-- Plugins JS -->
-<script src="{% static 'js/plugins.js'%}"></script>
-<!-- Main JS -->
-<script src="{% static 'js/main.js'%}"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    var preloader = document.querySelector(".preloader");
+    <!-- jQuery JS -->
+    <script src="{% static 'js/vendor/jquery-1.12.4.min.js'%}"></script>
+    <!-- Popper JS -->
+    <script src="{% static 'js/popper.min.js'%}"></script>
+    <!-- Bootstrap JS -->
+    <script src="{% static 'js/bootstrap.min.js'%}"></script>
+    <!-- Plugins JS -->
+    <script src="{% static 'js/plugins.js'%}"></script>
+    <!-- Main JS -->
+    <script src="{% static 'js/main.js'%}"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var preloader = document.querySelector(".preloader");
 
-    // Set the time frame in milliseconds (e.g., 3000ms = 3 seconds)
-    var timeFrame = 500;
+        // Set the time frame in milliseconds (e.g., 3000ms = 3 seconds)
+        var timeFrame = 500;
 
-    // Hide the preloader after the specified time frame
-    setTimeout(function() {
-        if (preloader) {
+        // Hide the preloader after the specified time frame
+        setTimeout(function () {
+          if (preloader) {
             preloader.style.display = "none";
-        }
-    }, timeFrame);
-});
-const searchstring = document.querySelector('.search')
-const feedbackarea1 = document.querySelector('.row1')
-const feedbackarea2 = document.querySelector('.row2')
-searchstring.addEventListener('keyup', (e) => {
-  const searchString = e.target.value;
-  if (searchString.length > 0){
-    console.log(searchString);
-    fetch('search/', {
-      body: JSON.stringify({ query : searchString}),
-      method: 'POST'
-    })
-    .then((res) => res.json())
-    .then(data => {
-      console.log(data);
-      feedbackarea1.innerHTML = '';
-      feedbackarea2.innerHTML = '';
-      data.data.forEach(result => {
-        const productHtml = `
-            <div class="col-xl-4 col-lg-5 col-md-5 col-sm-6">
-                <div class="product-wrap">
+          }
+        }, timeFrame);
+      });
+      const searchstring = document.querySelector(".search");
+      const feedbackarea1 = document.querySelector(".row1");
+      const feedbackarea2 = document.querySelector(".row2");
+      searchstring.addEventListener("keyup", (e) => {
+        const searchString = e.target.value;
+        if (searchString.length > 0) {
+          console.log(searchString);
+          fetch("search/", {
+            body: JSON.stringify({ query: searchString }),
+            method: "POST",
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              console.log(data);
+              feedbackarea1.innerHTML = "";
+              feedbackarea2.innerHTML = "";
+              data.data.forEach((result) => {
+                const productHtml1 = `
+            <div class="col-xl-4 col-md-6 col-lg-6 col-sm-6">
+                <div class="product-wrap mb-25 scroll-zoom">
                     <div class="product-img">
                         <a href="#">
                             <img class="default-img" src="${result.image}" alt="">
                             <img class="hover-img" src="${result.image}" alt="">
                         </a>
                         <span class="pink">-10%</span>
+                        <div class="product-action">
+                          <div class="pro-same-action pro-wishlist">
+                              <a title="Wishlist" href="#"><i class="pe-7s-like"></i></a>
+                          </div>
+                          <div class="pro-same-action pro-cart">
+                              <a title="Add To Cart" href="#"><i class="pe-7s-cart"></i> Add to cart</a>
+                          </div>
+                          <div class="pro-same-action pro-quickview">
+                              <a title="Quick View" href="#" data-toggle="modal" data-target="#exampleModal"><i class="pe-7s-look"></i></a>
+                          </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-xl-8 col-lg-7 col-md-7 col-sm-6">
-                <div class="shop-list-content">
+                  <div class="product-content text-center">
                     <h3><a href="#">${result.name}</a></h3>
-                    <div class="product-list-price">
-                        <span>Ksh ${result.price}</span>
-                        <span class="old">$ 90.00</span>
-                    </div>
-                    <div class="rating-review">
-                        <div class="product-list-rating">
+                        <div class="product-rating">
                             <i class="fa fa-star-o yellow"></i>
                             <i class="fa fa-star-o yellow"></i>
                             <i class="fa fa-star-o yellow"></i>
                             <i class="fa fa-star-o"></i>
                             <i class="fa fa-star-o"></i>
                         </div>
-                        <a href="#">3 Reviews</a>
-                    </div>
-                    <p>${result.description}</p>
-                    <div class="shop-list-btn btn-hover">
-                        <a href="#">ADD TO CART</a>
-                    </div>
+                        <div class="product-price">
+                          <span>Ksh ${result.price}</span>
+                          <span class=""> ${result.category}</span>
+                        </div>
+                  </div>
                 </div>
-            </div>
-        `;
-
-        feedbackarea1.insertAdjacentHTML('beforeend', productHtml);
-          });
-      
-    }
-    )}
-});
-</script>
-
+            </div> `;
+            const productHtml2 = `
+            <div class="col-xl-4 col-lg-5 col-md-5 col-sm-6">
+              <div class="product-wrap">
+                  <div class="product-img">
+                      <a href="#">
+                          <img class="default-img" src="${ result.image }" alt="">
+                          <img class="hover-img" src="${ result.image }" alt="">
+                      </a>
+                      <span class="pink">-10%</span>
+                  </div>
+              </div>
+          </div>
+          <div class="col-xl-8 col-lg-7 col-md-7 col-sm-6">
+              <div class="shop-list-content">
+                  <h3><a href="#">${ result.name }</a></h3>
+                  <div class="product-list-price">
+                      <span>Ksh ${ result.price }</span>
+                      <span class="old">$ 90.00</span>
+                  </div>
+                  <div class="rating-review">
+                      <div class="product-list-rating">
+                          <i class="fa fa-star-o yellow"></i>
+                          <i class="fa fa-star-o yellow"></i>
+                          <i class="fa fa-star-o yellow"></i>
+                          <i class="fa fa-star-o"></i>
+                          <i class="fa fa-star-o"></i>
+                      </div>
+                      <a href="#">3 Reviews</a>
+                  </div>
+                  <p>${ result.description } </p>
+                  <div class="shop-list-btn btn-hover">
+                      <a href="#">ADD TO CART</a>
+                  </div>
+              </div>
+          </div>`;
+            feedbackarea1.insertAdjacentHTML("beforeend", productHtml1);
+            feedbackarea2.insertAdjacentHTML("beforeend", productHtml2)
+              });
+            });
+        }
+      });
+    </script>
   </body>
 </html>
